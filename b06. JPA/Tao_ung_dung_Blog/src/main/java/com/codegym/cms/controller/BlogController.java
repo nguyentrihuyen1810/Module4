@@ -79,7 +79,7 @@ public class BlogController {
 
     @PostMapping("/delete-blog")
     public String deleteBlog(@ModelAttribute("customer") Blog blog) {
-        blogService.remove(blog.getId());
+        blogService.remove(Math.toIntExact(blog.getId()));
         return "redirect:customers";
     }
 }

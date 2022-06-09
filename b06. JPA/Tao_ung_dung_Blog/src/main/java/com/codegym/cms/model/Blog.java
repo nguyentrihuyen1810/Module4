@@ -20,7 +20,7 @@ public class Blog {
         return String.format("Blog[id=%id, title='$s', content='$content']", id, title, content);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
