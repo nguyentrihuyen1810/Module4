@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>Trang home</h1>
+<form th:action="@{'/blog'}" method="get">
+    <input name="titleSearch" placeholder="Nhập tiêu đề">
+    <select name="categoryIdSearch">
+        <option value="">Chọn mục</option>
+        <option th:each="ctg:${categoryList}" th:value="${ctg.id}" th:text="${ctg.name}">Chọn mục</option>
+    </select>
+    <button type="submit">Search</button>
+</form>
+<a href="blog/create"> Thêm mới</a>
+<table class="table table-stript">
+    <tr>
+        <th>STT</th>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Category</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="blog,statust:${blogs}">
+        <td th:text="${statust.index}"></td>
+        <td th:text="${blog.getId()}"></td>
+        <td th:text="${blog.getTitle()}"></td>
+        <td th:text="${blog.getContent()}"></td>
+        <td th:text="${blog.getCategory().getName()}"></td>
+        <td>
+            <a th:href="@{blog/edit(page=${blog.getId()})}">Edit</a>
+        </td>
+        <td >
+            <button type="button"
+                    th:onclick="|deleteCustomer(${blog.getId()})|"
+                    class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                Delete
+            </button>
+        </td>
+    </tr>
+</table>
+<div>
+    <a th:href="@{'/blog'(page=${blogs.number - 1})}" th:if="${blogs.hasPrevious()}">Previous</a>
+    <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+    <a th:href="@{'/blog'(page=${blogs.number + 1})}" th:if="${blogs.hasNext()}">Next</a>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function deleteCustomer(id,name) {
+        alert(id + name)
+    }
+</script>
+</body>
+</html>

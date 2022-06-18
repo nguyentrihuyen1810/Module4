@@ -2,22 +2,23 @@ package com.codegym.demo.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
-@Table (name = "category")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private Collection<Blog> blogs;
+    @OneToMany(mappedBy = "category")
+
+
+    private List<Blog> blogs;
 
     public Category() {
     }
 
-    public Category(Integer id, String name, Collection<Blog> blogs) {
+    public Category(Integer id, String name, List<Blog> blogs) {
         this.id = id;
         this.name = name;
         this.blogs = blogs;
@@ -43,7 +44,7 @@ public class Category {
         return blogs;
     }
 
-    public void setBlogs(Collection<Blog> blogs) {
+    public void setBlogs(List<Blog> blogs) {
         this.blogs = blogs;
     }
 }

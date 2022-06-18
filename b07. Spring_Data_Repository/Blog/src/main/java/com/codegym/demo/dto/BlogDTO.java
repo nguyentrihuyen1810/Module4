@@ -1,22 +1,20 @@
-package com.codegym.demo.model;
+package com.codegym.demo.dto;
 
-import javax.persistence.*;
+import com.codegym.demo.model.Category;
 
-@Entity
-public class Blog {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+import javax.validation.constraints.NotEmpty;
+
+public class BlogDTO {
     private Integer id;
+    @NotEmpty(message = "Tieu de khong duoc de trong")
     private String title;
     private String content;
-    @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    public Blog() {
+    public BlogDTO() {
     }
 
-    public Blog(Integer id, String title, String content, Category category) {
+    public BlogDTO(Integer id, String title, String content, Category category) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -51,7 +49,7 @@ public class Blog {
         return category;
     }
 
-    public void setProvince(Category category1) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 }
