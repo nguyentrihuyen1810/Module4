@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script type = "text/javascript">
+        function addNewBlog() {
+            let author = $('#author').val();
+            let title = $('#title').val();
+            let content = $('#content').val();
+            let category = $('#categoryName').val();
+            let newBlog = {
+                author: author,
+                title: title,
+                content: content,
+                category: category
+            };
+
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                data: JSON.stringify(newBlog),
+                url: "/blog",
+                success: suceessHandler()
+            });
+            event.preventDefault();
+        }
+
+        function suceessHandler() {
+            $.ajax ({
+                type: "GET",
+                url: "/blog",
+                success: function (data) {
+                    let content = '<tr>\n' +
+                            '<td>Author</td>\n' +
+                            '<td>Title</td>\n' +
+                            '<td>Content</td>\n' +
+                            '<td>Category</td>\n' +
+                            '<td>Edit | Delete</td>\n' +
+                            '</tr>';
+                    for(let i = 0; i < data.length; i++) {
+                        content += getBlog(data[i]);
+                    }
+                    document.getElementById('categoryList').innerHTML = content;
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            //sư kiện nào thực hiện Ajax
+            $('.deleteBlog').click(function (event) {
+                //lay du lieu
+                let a = $(this);
+                let blogId = a.attr("href");
+                // goi ajax
+                $.ajax({
+                    type: "DELETE",
+                    //tên API
+                    url: `/blog/${blogId}`,
+                    //xử lý khi thành công
+                    success: function (data) {
+                        a.parent().parent().remove();
+                    }
+
+                });
+                //chặn sự kiện mặc định của thẻ
+                event.preventDefault();
+            });
+        })
+    </script>
+</head>
+<body>
+<form id = "add-blog">
+    <table border = "1">
+        <tr>
+            <td>Author</td>
+            <td><input type = "text" id = "author" placeholder="Nhap ten tac gia"/></td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td><input type = "text" id = "title" placeholder="Nhap tieu de"/></td>
+        </tr>
+        <tr>
+            <td>Author</td>
+            <td><input type = "textarea" id = "content" placeholder="Nhap noi dung"/></td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td><input type = "text" id = "category" placeholder="Chon the loai"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type = "submit" value="Add" onclick="addNewBlog()"/></td>
+        </tr>
+    </table>
+</form>
+<h1>Blog List</h1>
+<table id = "categoryList">
+    <tr>
+        <td>Author</td>
+        <td>Title</td>
+        <td>Content</td>
+        <td>Category</td>
+        <td>Edit | Delete</td>
+    </tr>
+    <th: block th:each = "blog: ${blogs}">
+        <tr>
+            <td th:text = "${blog.getAuthor()}"></td>
+            <td th:text = "${blog.getTitle()}"></td>
+            <td th:text = "${blog.getContent()}"></td>
+            <td th:text = "${blog.getCategory().getName()}"></td>
+            <td>
+                <a class = "deleteBlog" th:href = "${blog.getId()}">Delete</a>
+                <a class = "editBlog" th:href = "${blog.getId()}">Delete</a>
+            </td>
+        </tr>
+    </th:>
+</table>
+</body>
+</html>

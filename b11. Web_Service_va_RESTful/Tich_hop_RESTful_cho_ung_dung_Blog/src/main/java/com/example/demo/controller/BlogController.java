@@ -32,7 +32,7 @@ public class BlogController {
     @GetMapping("")
     public ResponseEntity<Blog> getList(@PageableDefault(size = 5) Pageable pageable) {
         Page<Blog> blogs = this.blogService.findByAll((org.springframework.data.domain.Pageable) pageable);
-        return new ResponseEntity<>(blogs.get(), HttpStatus.OK);
+        return new ResponseEntity(blogs.get(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
