@@ -11,12 +11,16 @@
 <table border="1">
     <tr>
         <td>Name</td>
+        <td>Image</td>
         <td>Price</td>
         <td>Add To Cart</td>
     </tr>
     <th:block th:each="product:${products}">
         <tr>
             <td th:text="${product.name}"></td>
+            <td>
+                <img th:src="@{'/images/' +${product.image}}" style="width: 100px; height: 100px" alt="">
+            </td>
             <td th:text="${product.price}"></td>
             <td><a th:href="@{/add/__${product.id}__(action='list')}">Add To Cart</a></td>
         </tr>

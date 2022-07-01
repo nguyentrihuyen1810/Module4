@@ -9,15 +9,17 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String image;
     private double price;
     private String description;
 
     public Product() {
     }
 
-    public Product(Long id, String name, double price, String description) {
+    public Product(Long id, String name, String image, double price, String description) {
         this.id = id;
         this.name = name;
+        this.image = image;
         this.price = price;
         this.description = description;
     }
@@ -52,5 +54,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
