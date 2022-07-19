@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface IEmployeeService {
     Page<Employee> findAll(Pageable pageable);
 
-    Page<Employee> findByAll(Pageable pageable, String employeeNameSearch, String positionIdSearch);
+    Page<Employee> findByAll(Pageable pageable, String employeeNameSearch, String positionIdSearch, String educationDegreeIdSearch, String divisionIdSearch);
 
     void save(Employee employee);
 

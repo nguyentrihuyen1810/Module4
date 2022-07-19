@@ -21,8 +21,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
     @Override
-    public Page<Employee> findByAll(Pageable pageable, String employeeNameSearch, String positionIdSearch) {
-        return employeeRepository.search("%" + employeeNameSearch + "%", "%" + positionIdSearch + "%", pageable);
+    public Page<Employee> findByAll(Pageable pageable, String employeeNameSearch, String positionIdSearch, String educationDegreeIdSearch, String divisionIdSearch) {
+        return employeeRepository.search("%" + employeeNameSearch + "%","%" + positionIdSearch + "%",
+                                        "%" + educationDegreeIdSearch + "%", "%" + divisionIdSearch + "%", pageable);
     }
 
     @Override

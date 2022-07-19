@@ -2,30 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add new customer</title>
+    <title>Add new employee</title>
 </head>
 <body>
-<h1>Add new customer</h1>
+<h1>Add new employee</h1>
 <div>
     <span style="color: brown" th:text="${mess}"></span>
 </div>
-<form th:action="@{/home/customer/save}" method="post" th:object="${customerDTO}">
+<form th:action="@{/home/employee/save}" method="post" th:object="${employeeDTO}">
     <p>Name</p>
     <input type = "text" name = "name" th:field="*{name}" placeholder="Enter name"/>
     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><br>
-    <p>Customer Type</p>
-    <select th:field ="*{customer_type}">
-        <option th:each="ctmt:${customerTypeList}" th:value="${ctmt.id}" th:text="${ctmt.name}"></option>
-    </select><br>
     <p>Birthday</p>
     <input type = "text" name = "birthday" th:field="*{birthday}" placeholder="Enter birthday"/>
     <span th:if="${#fields.hasErrors('birthday')}" th:errors = "*{birthday}"></span><br>
-    <p>Gender</p>
-    <input type = "text" name = "gender" th:field="*{gender}" placeholder="Enter gender"/>
-    <span th:if="${#fields.hasErrors('gender')}" th:errors = "*{gender}"></span><br>
     <p>Card ID</p>
     <input type = "text" name = "cardId" th:field="*{cardId}" placeholder="Enter cardId"/>
     <span th:if="${#fields.hasErrors('cardId')}" th:errors = "*{cardId}"></span><br>
+    <p>Salary</p>
+    <input type = "number" name = "salary" th:field="*{salary}" placeholder="Enter salary"/>
+    <span th:if="${#fields.hasErrors('salary')}" th:errors = "*{salary}"></span><br>
     <p>Phone</p>
     <input type = "text" name = "phone" th:field="*{phone}" placeholder="Enter phone"/>
     <span th:if="${#fields.hasErrors('phone')}" th:errors = "*{phone}"></span><br>
@@ -34,7 +30,19 @@
     <span th:if="${#fields.hasErrors('email')}" th:errors = "*{email}"></span><br>
     <p>Address</p>
     <input type = "text" name = "address" th:field="*{address}" placeholder="Enter address"/>
-    <span th:if="${#fields.hasErrors('address')}" th:errors = "*{address}"></span><br><br>
+    <span th:if="${#fields.hasErrors('address')}" th:errors = "*{address}"></span><br>
+    <p>Position</p>
+    <select th:field ="*{position}">
+        <option th:each="pst:${positionList}" th:value="${pst.id}" th:text="${pst.name}"></option>
+    </select><br>
+    <p>Education degree</p>
+    <select th:field ="*{education_degree}">
+        <option th:each="edct:${educationDegreeList}" th:value="${edct.id}" th:text="${edct.name}"></option>
+    </select><br>
+    <p>Division</p>
+    <select th:field ="*{division}">
+        <option th:each="dvs:${divisionList}" th:value="${dvs.id}" th:text="${dvs.name}"></option>
+    </select><br>
     <button type = "submit">Save</button>
 </form>
 </body>
