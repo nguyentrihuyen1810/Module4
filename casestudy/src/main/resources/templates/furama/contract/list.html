@@ -5,52 +5,47 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
-    <title>Customer List</title>
+    <title>Contract List</title>
 </head>
 <body>
-<h1>List of customers</h1>
+<h1>List of contract</h1>
 <br>
-<form th:action = "@{'/home/customer'}" method = "get">
-    <input name = "customerNameSearch" placeholder="Enter name customer">
-    <select name = "customerTypeIdSearch">
-        <option value="">--- Select type customer ---</option>
-        <option th:each = "ctmt:${customerTypeList}" th:value = "${ctmt.id}" th:text="${ctmt.name}"></option>
-    </select>
-    <button type="submit">Search Customer</button>
+<form th:action = "@{'/home/contract'}" method = "get">
+    <input name = "contractStartDateSearch" placeholder="Enter start date">
+    <input name = "contractEndDateSearch" placeholder="Enter end date">
+    <button type="submit">Search Contract</button>
 </form>
 <br>
-<a th:href="@{/home/customer/create}">Add new customer</a>
+<a th:href="@{/home/contract/create}">Add new contract</a>
 <br>
 <table class="table table-stript">
     <tr style="background: wheat">
         <th>STT</th>
-        <th>Customer Type</th>
-        <th>Name</th>
-        <th>Birthday</th>
-        <th>Gender</th>
-        <th>ID Card</th>
-        <th>Phone</th>
-        <th>Email</th>
-        <th>Address</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Deposit</th>
+        <th>Total money</th>
+        <th>Employee name</th>
+        <th>Customer name</th>
+        <th>Service</th>
         <th>Action</th>
     </tr>
-    <tr th:each = "customer, status: ${customers}">
+    <tr th:each = "contract, status: ${contracts}">
         <td th:text = "${status.index + 1}"></td>
-        <td th:text = "${customer.getCustomer_type().getName()}"></td>
-        <td th:text = "${customer.getName()}"></td>
-        <td th:text = "${customer.getBirthday()}"></td>
-        <td th:text = "${customer.getGender()}"></td>
-        <td th:text = "${customer.getCardId()}"></td>
-        <td th:text = "${customer.getPhone()}"></td>
-        <td th:text = "${customer.getEmail()}"></td>
-        <td th:text = "${customer.getAddress()}"></td>
+        <td th:text = "${contract.getStartDate()}"></td>
+        <td th:text = "${contract.getEndDate()}"></td>
+        <td th:text = "${contract.getDeposit()}"></td>
+        <td th:text = "${contract.getTotalMoney()}"></td>
+        <td th:text = "${contract.getEmployee().getName()}"></td>
+        <td th:text = "${contract.getCustomer().getName()}"></td>
+        <td th:text = "${contract.getService().getName()}"></td>
         <td>
             <button type="button" class="btn btn-danger">
-                <a th:href="@{customer/edit(id=${customer.getId()})}">Edit</a>
+                <a th:href="@{contract/edit(id=${contract.getId()})}">Edit</a>
             </button>
             &nbsp;
             <button type="button"
-                    th:onclick="|deleteCustomer(${customer.getId()})|"
+                    th:onclick="|deleteContract(${contract.getId()})|"
                     class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
                 Delete
             </button>
@@ -58,14 +53,14 @@
     </tr>
 </table>
 <div>
-    <a th:href = "@{'/home/customer'(page=${customers.number - 1}, name = ${customerNameSearch}, customer_type_id = ${customerTypeIdSearch})}" th:if="${customers.hasPrevious()}">Previous</a>
-    <span th:text="${customers.number + 1}"></span>/<span th:text="${customers.totalPages}"></span>
-    <a th:href = "@{'/home/customer'(page=${customers.number + 1}, name = ${customerNameSearch}, customer_type_id = ${customerTypeIdSearch})}" th:if="${customers.hasNext()}">Next</a>
+    <a th:href = "@{'/home/contract'(page=${contracts.number - 1}, start_date = ${contractStartDateSearch}, end_date = ${contractEndDateSearch})}" th:if="${contracts.hasPrevious()}">Previous</a>
+    <span th:text="${contracts.number + 1}"></span>/<span th:text="${contracts.totalPages}"></span>
+    <a th:href = "@{'/home/contract'(page=${contracts.number + 1}, start_date = ${contractStartDateSearch}, end_date = ${contractEndDateSearch})}" th:if="${contracts.hasNext()}">Next</a>
 </div>
 <a href="/home">Back to home</a>
 
 <!-- Modal -->
-<form th:action = "@{/home/customer/delete}" method="get">
+<form th:action = "@{/home/contract/delete}" method="get">
     <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -88,7 +83,7 @@
     </div>
 </form>
 <script>
-    function deleteCustomer(id) {
+    function deleteContract(id) {
         document.getElementById("idD").innerText =id;
         document.getElementById("idDelete").value =id;
     }

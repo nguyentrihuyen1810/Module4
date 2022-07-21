@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Employee</title>
+</head>
+<body>
+<h1>Edit employee</h1>
+<div>
+    <span style="color: aqua" th:text="${mess}"></span>
+</div>
+<form th:action="@{/home/service/save}" method="post" th:object="${serviceDTO}">
+    <input type="hidden" name="id" th:field="*{id}"/>
+
+    <p>Name</p>
+    <input type = "text" name = "name" th:field="*{name}" placeholder="Enter name"/>
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span><br>
+
+    <p>Area</p>
+    <input type = "text" name = "area" th:field="*{area}" placeholder="Enter birthday"/>
+    <span th:if="${#fields.hasErrors('area')}" th:errors = "*{area}"></span><br>
+
+    <p>Cost</p>
+    <input type = "text" name = "cost" th:field="*{cost}" placeholder="Enter cardId"/>
+    <span th:if="${#fields.hasErrors('cost')}" th:errors = "*{cost}"></span><br>
+
+    <p>Max people</p>
+    <input type = "number" name = "salary" th:field="*{maxPeople}" placeholder="Enter salary"/>
+    <span th:if="${#fields.hasErrors('maxPeople')}" th:errors = "*{maxPeople}"></span><br>
+
+    <p>Rent type</p>
+    <select th:field ="*{rent_type}">
+        <option th:each="ret:${rentTypeList}" th:value="${ret.id}" th:text="${ret.name}"></option>
+    </select><br>
+
+    <p>Service type</p>
+    <select th:field ="*{service_type}">
+        <option th:each="set:${serviceTypeList}" th:value="${set.id}" th:text="${set.name}"></option>
+    </select><br>
+
+    <p>Standard room</p>
+    <input type = "text" name = "standardRoom" th:field="*{standardRoom}" placeholder="Enter phone"/>
+    <span th:if="${#fields.hasErrors('standardRoom')}" th:errors = "*{standardRoom}"></span><br>
+
+    <p>Description</p>
+    <input type = "text" name = "descriptionOtherConvenience" th:field="*{descriptionOtherConvenience}" placeholder="Enter email"/>
+    <span th:if="${#fields.hasErrors('descriptionOtherConvenience')}" th:errors = "*{descriptionOtherConvenience}"></span><br>
+
+    <p>Pool area</p>
+    <input type = "text" name = "poolArea" th:field="*{poolArea}" placeholder="Enter address"/>
+    <span th:if="${#fields.hasErrors('poolArea')}" th:errors = "*{poolArea}"></span><br>
+
+    <p>Number of floors</p>
+    <input type = "text" name = "numberOfFloors" th:field="*{numberOfFloors}" placeholder="Enter address"/>
+    <span th:if="${#fields.hasErrors('numberOfFloors')}" th:errors = "*{numberOfFloors}"></span><br>
+
+    <button type = "submit">Save</button>
+</form>
+</body>
+</html>

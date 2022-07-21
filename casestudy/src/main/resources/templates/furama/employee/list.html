@@ -74,6 +74,7 @@
     <span th:text="${employees.number + 1}"></span>/<span th:text="${employees.totalPages}"></span>
     <a th:href = "@{'/home/employee'(page=${employees.number + 1}, name = ${employeeNameSearch}, position_id = ${positionIdSearch}, education_degree_id = ${educationDegreeIdSearch}, divisionId = ${divisionIdSearch})}" th:if="${employees.hasNext()}">Next</a>
 </div>
+<a href="/home">Back to home</a>
 
 <!-- Modal -->
 <form th:action = "@{/home/employee/delete}" method="get">

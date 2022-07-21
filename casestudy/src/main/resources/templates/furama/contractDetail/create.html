@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new contract</title>
+</head>
+<body>
+<h1>Add new contract</h1>
+<div>
+    <span style="color: brown" th:text="${mess}"></span>
+</div>
+<form th:action="@{/home/contractDetail/save}" method="post" th:object="${contractDetailDTO}">
+    <p>Contract start date</p>
+    <select th:field ="*{contract}">
+        <option th:each="ctr:${contractList}" th:value="${ctr.id}" th:text="${ctr.startDate}"></option>
+    </select><br>
+
+    <p>Attach service name</p>
+    <select th:field ="*{attach_service}">
+        <option th:each="ats:${attachServiceList}" th:value="${ats.id}" th:text="${ats.name}"></option>
+    </select><br>
+
+    <p>Quantity</p>
+    <input type = "number" name = "quantity" th:field="*{quantity}" placeholder="Enter quantity"/>
+    <span th:if="${#fields.hasErrors('quantity')}" th:errors = "*{quantity}"></span><br>
+
+    <button type = "submit">Save</button>
+</form>
+</body>
+</html>

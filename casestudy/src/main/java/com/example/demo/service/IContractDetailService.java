@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface IContractDetailService {
     Page<Contract_detail> findAll(Pageable pageable);
 
-    Page<Contract_detail> findByAll(Pageable pageable, String contractDetailQuantitySearch, String contractDetailIdSearch);
+    Page<Contract_detail> findByAll(Pageable pageable, String contractIdSearch, String contractDetailQuantitySearch);
 
     void save(Contract_detail contractDetail);
 

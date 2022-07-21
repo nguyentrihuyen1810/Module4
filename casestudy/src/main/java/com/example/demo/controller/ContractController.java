@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ContractDTO;
 import com.example.demo.dto.EmployeeDTO;
 import com.example.demo.model.*;
 import com.example.demo.service.*;
@@ -50,66 +51,54 @@ public class ContractController {
 
     @GetMapping("")
     public String getList(Model model, @RequestParam(defaultValue = "0") int page,
-                          Optional<String> employeeNameSearch, Optional<String> positionIdSearch,
-                          Optional<String> educationDegreeIdSearch, Optional<String> divisionIdSearch) {
-        String employeeNameSearchValue = "";
-        String positionIdSearchValue = "";
-        String educationDegreeIdSearchValue = "";
-        String divisionIdSearchValue = "";
-        if(employeeNameSearch.isPresent()) {
-            employeeNameSearchValue = employeeNameSearch.get();
+                          Optional<String> contractStartDateSearch, Optional<String> contractEndDateSearch) {
+        String contractStartDateSearchValue = "";
+        String contractEndDateSearchValue = "";
+        if(contractStartDateSearch.isPresent()) {
+            contractStartDateSearchValue = contractStartDateSearch.get();
         }
-        if(positionIdSearch.isPresent()) {
-            positionIdSearchValue = positionIdSearch.get();
+        if(contractEndDateSearch.isPresent()) {
+            contractEndDateSearchValue = contractEndDateSearch.get();
         }
-        if(educationDegreeIdSearch.isPresent()) {
-            educationDegreeIdSearchValue = educationDegreeIdSearch.get();
-        }
-        if(divisionIdSearch.isPresent()) {
-            divisionIdSearchValue = divisionIdSearch.get();
-        }
-        model.addAttribute("employeeNameSearch", employeeNameSearchValue);
-        model.addAttribute("positionIdSearch", positionIdSearchValue);
-        model.addAttribute("educationDegreeIdSearch", educationDegreeIdSearchValue);
-        model.addAttribute("divisionIdSearch", divisionIdSearchValue);
-        Page<Employee> employees = employeeService.findByAll(PageRequest.of(page, 4), employeeNameSearchValue, positionIdSearchValue,
-                                                                educationDegreeIdSearchValue, divisionIdSearchValue);
-        model.addAttribute("employees", employees);
-        return "furama/employee/list";
+        model.addAttribute("contractStartDateSearch", contractStartDateSearchValue);
+        model.addAttribute("contractEndDateSearch", contractEndDateSearchValue);
+        Page<Contract> contracts = contractService.findByAll(PageRequest.of(page, 4), contractStartDateSearchValue, contractEndDateSearchValue);
+        model.addAttribute("contracts", contracts);
+        return "furama/contract/list";
     }
 
     @GetMapping("create")
-    public String showCreateCustomer(Model model) {
-        model.addAttribute("employeeDTO", new EmployeeDTO());
-        return "furama/employee/create";
+    public String showCreateContract(Model model) {
+        model.addAttribute("contractDTO", new ContractDTO());
+        return "furama/contract/create";
     }
 
     @PostMapping("save")
-    public String save(@ModelAttribute @Validated EmployeeDTO employeeDTO, BindingResult bindingResult, Model model){
-        Employee employee = new Employee();
+    public String save(@ModelAttribute @Validated ContractDTO contractDTO, BindingResult bindingResult, Model model){
+        Contract contract = new Contract();
         if (bindingResult.hasErrors()){
             model.addAttribute("mess", "Add not successfully!");
-            return "furama/employee/create";
+            return "furama/contract/create";
         }else {
-            BeanUtils.copyProperties(employeeDTO, employee);
-            employeeService.save(employee);
-            model.addAttribute("employeeDTO", employeeDTO);
+            BeanUtils.copyProperties(contractDTO, contract);
+            contractService.save(contract);
+            model.addAttribute("contractDTO", contractDTO);
             model.addAttribute("mess", "Add successfully!");
         }
-        return "redirect:/home/employee";
+        return "redirect:/home/contract";
     }
 
     @GetMapping("edit")
-    public String showEditEmployee(Model model, @RequestParam int id) {
-        Employee employee = employeeService.findById(id).orElse(null);
-        model.addAttribute("employeeDTO", employee);
-        return "furama/employee/edit";
+    public String showEditContract(Model model, @RequestParam int id) {
+        Contract contract = contractService.findById(id).orElse(null);
+        model.addAttribute("contractDTO", contract);
+        return "furama/contract/edit";
     }
 
     @GetMapping("delete")
     public String delete(@RequestParam int idDelete, RedirectAttributes redirectAttributes) {
-        employeeService.delete(idDelete);
+        contractService.delete(idDelete);
         redirectAttributes.addFlashAttribute("mess", "Delete successfully!");
-        return "redirect:/home/employee";
+        return "redirect:/home/contract";
     }
 }

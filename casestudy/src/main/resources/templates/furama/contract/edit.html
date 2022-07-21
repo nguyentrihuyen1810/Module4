@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Contract</title>
+</head>
+<body>
+<h1>Edit contract</h1>
+<div>
+    <span style="color: aqua" th:text="${mess}"></span>
+</div>
+<form th:action="@{/home/contract/save}" method="post" th:object="${contractDTO}">
+    <input type="hidden" name="id" th:field="*{id}"/>
+
+    <p>Start Date</p>
+    <input type = "text" name = "startDate" th:field="*{startDate}" placeholder="Enter start date"/>
+    <span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></span><br>
+
+    <p>End Date</p>
+    <input type = "text" name = "endDate" th:field="*{endDate}" placeholder="Enter end date"/>
+    <span th:if="${#fields.hasErrors('endDate')}" th:errors = "*{endDate}"></span><br>
+
+    <p>Deposit</p>
+    <input type = "number" name = "deposit" th:field="*{deposit}" placeholder="Enter deposit"/>
+    <span th:if="${#fields.hasErrors('deposit')}" th:errors = "*{deposit}"></span><br>
+
+    <p>Total money</p>
+    <input type = "number" name = "totalMoney" th:field="*{totalMoney}" placeholder="Enter total money"/>
+    <span th:if="${#fields.hasErrors('totalMoney')}" th:errors = "*{totalMoney}"></span><br>
+
+    <p>Employee name</p>
+    <select th:field ="*{employee}">
+        <option th:each="emp:${employeeList}" th:value="${emp.id}" th:text="${emp.name}"></option>
+    </select><br>
+
+    <p>Customer name</p>
+    <select th:field ="*{customer}">
+        <option th:each="cus:${customerList}" th:value="${cus.id}" th:text="${cus.name}"></option>
+    </select><br>
+
+    <p>Service name</p>
+    <select th:field ="*{service}">
+        <option th:each="ser:${serviceList}" th:value="${ser.id}" th:text="${ser.name}"></option>
+    </select><br>
+
+    <button type = "submit">Save</button>
+</form>
+</body>
+</html>

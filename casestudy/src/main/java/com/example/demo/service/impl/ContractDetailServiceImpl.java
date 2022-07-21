@@ -14,14 +14,15 @@ import java.util.Optional;
 public class ContractDetailServiceImpl implements IContractDetailService {
     @Autowired
     private ContractDetailRepository contractDetailRepository;
+
     @Override
     public Page<Contract_detail> findAll(Pageable pageable) {
         return contractDetailRepository.findAll(pageable);
     }
 
     @Override
-    public Page<Contract_detail> findByAll(Pageable pageable, String contractDetailIdSearch, String contractDetailQuantitySearch) {
-        return contractDetailRepository.search("%" + contractDetailIdSearch + "%", "%" + contractDetailQuantitySearch + "%", pageable);
+    public Page<Contract_detail> findByAll(Pageable pageable, String contractIdSearch, String contractDetailQuantitySearch) {
+        return contractDetailRepository.search("%" + contractIdSearch + "%", "%" + contractDetailQuantitySearch + "%", pageable);
     }
 
     @Override
